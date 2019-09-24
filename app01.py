@@ -1,7 +1,6 @@
-from random import choice
-from random import randint
+from random import choice, randint
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -25,12 +24,15 @@ def add(a, b):
 
 @app.route('/omikuji')
 def omikuji():  # ←ViewFunction
-    運 = ['大吉', '吉', '凶']
-    return '今日の運勢は...' + 運[randint(0, len(運))]
+    results = ['大吉', '吉', '凶']
+    idx = randint(0, len(results) - 1)
+    result = results[idx]
+
+    return render_template('omikuji.html', result=result)
 
 
 @app.route('/omikuji_ans')
-def omikuji():  # ←ViewFunction
+def omikuji_ans():  # ←ViewFunction
     運 = ['大吉', '吉', '凶']
     result = choice(運)
     return '今日の運勢は...' + result
